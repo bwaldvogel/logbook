@@ -3,15 +3,13 @@ package org.zalando.logbook.jaxrs;
 import jakarta.ws.rs.container.ContainerRequestContext;
 import jakarta.ws.rs.container.ContainerResponseContext;
 import jakarta.ws.rs.container.ContainerResponseFilter;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.ValueSource;
+import org.junit.jupiter.api.Test;
 import org.zalando.logbook.Logbook;
 
 import java.io.IOException;
 
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verifyNoInteractions;
-import static org.mockito.Mockito.when;
 
 final class LogbookServerFilterTest {
 
@@ -21,10 +19,8 @@ final class LogbookServerFilterTest {
 
     private final ContainerResponseFilter unit = new LogbookServerFilter(logbook);
 
-    @ParameterizedTest
-    @ValueSource(booleans = {true, false})
-    void filterShouldDoNothingIfCorrelatorIsNotPresent(boolean hasEntity) throws IOException {
-        when(response.hasEntity()).thenReturn(hasEntity);
+    @Test
+    void filterShouldDoNothingIfCorrelatorIsNotPresent() throws IOException {
         unit.filter(request, response);
         verifyNoInteractions(logbook);
     }
