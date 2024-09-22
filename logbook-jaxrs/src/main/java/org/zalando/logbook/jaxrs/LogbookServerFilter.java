@@ -48,7 +48,8 @@ public final class LogbookServerFilter implements ContainerRequestFilter, Contai
                         throwingConsumer(stage ->
                                 stage.process(response).write()));
 
-        response.expose();
+        if (context.hasEntity())
+            response.expose();
     }
 
     @Override
